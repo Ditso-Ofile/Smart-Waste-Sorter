@@ -40,5 +40,6 @@ Runtime -> Change runtime type -> GPU (T4) before running.
 
 ## Team
 
-- Person A - models, training, evaluation
-- Person B - webcam app, webcam test set, domain-shift study
+- Ditso
+- Aws
+- Jahongir
