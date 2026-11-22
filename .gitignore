@@ -1,0 +1,17 @@
+# Environment
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Data and large artefacts (never commit the dataset or model weights)
+data/raw/
+data/webcam_test/
+models/*
+!models/.gitkeep
+*.zip
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

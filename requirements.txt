@@ -1,0 +1,13 @@
+# Core ML (TensorFlow 2.16+ ships Keras 3; Python 3.11 is the safe choice)
+tensorflow>=2.16
+# Data + metrics
+numpy
+pandas
+scikit-learn
+# Plots for the report
+matplotlib
+seaborn
+# Webcam app (use opencv-python, NOT opencv-python-headless, on your laptop: you need cv2.imshow)
+opencv-python
+# Progress bars / misc
+tqdm

@@ -1,0 +1,27 @@
+"""Single source of truth for paths and constants.
+
+Every script (training, evaluation, webcam app) imports from here so that
+class order, image size and paths can never drift apart.
+"""
+from pathlib import Path
+
+# --- Paths -----------------------------------------------------------------
+ROOT = Path(__file__).resolve().parents[1]
+DATA_RAW = ROOT / "data" / "raw"            # TrashNet unzipped here (Step 2)
+DATA_SPLITS = ROOT / "data" / "splits"      # train.csv / val.csv / test.csv
+WEBCAM_TEST = ROOT / "data" / "webcam_test" # your own captured images (Step 8)
+MODELS = ROOT / "models"
+RESULTS = ROOT / "results"
+RUN_LOG = RESULTS / "runs.csv"              # one row per experiment
+
+# --- Data ------------------------------------------------------------------
+# Alphabetical order = the order Keras' image_dataset_from_directory uses.
+# The webcam app MUST use this exact list, in this order.
+CLASSES = ["cardboard", "glass", "metal", "paper", "plastic", "trash"]
+NUM_CLASSES = len(CLASSES)
+IMG_SIZE = (224, 224)
+
+# --- Training defaults -----------------------------------------------------
+SEED = 42
+BATCH_SIZE = 32
+SPLIT = (0.70, 0.15, 0.15)  # train / val / test
