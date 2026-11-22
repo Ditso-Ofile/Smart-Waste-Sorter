@@ -70,7 +70,8 @@ def main():
         print("\n5. Webcam (a window opens for ~3 s; press q to close early)")
         try:
             import cv2
-            cap = cv2.VideoCapture(0)
+            backend = cv2.CAP_DSHOW if sys.platform == "win32" else cv2.CAP_ANY
+            cap = cv2.VideoCapture(0, backend)
             if not cap.isOpened():
                 fail("Camera 0 did not open - try index 1, or check OS camera permissions")
                 problems += 1
