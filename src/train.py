@@ -128,13 +128,14 @@ def main():
     ap.add_argument("--lr-head", type=float, default=1e-3)
     ap.add_argument("--lr-ft", type=float, default=1e-5)
     ap.add_argument("--batch", type=int, default=32)
+    ap.add_argument("--tag", default="", help="suffix for the run name, e.g. --tag lr1e-4 -> E3-lr1e-4")
     ap.add_argument("--quick", action="store_true", help="smoke test: 1+1 epochs on a few batches")
     args = ap.parse_args()
 
     cfg = dict(EXPERIMENTS[args.exp])
     if args.backbone:
         cfg["backbone"] = args.backbone
-    exp = args.exp + ("-quick" if args.quick else "")
+    exp = args.exp + (f"-{args.tag}" if args.tag else "") + ("-quick" if args.quick else "")
     if args.quick:
         args.epochs_head, args.epochs_ft = 1, 1
 
@@ -172,7 +173,7 @@ def main():
         ft_start = len(hist)
         h2 = model.fit(train_ds, validation_data=val_ds, initial_epoch=ft_start,
                        epochs=ft_start + args.epochs_ft, class_weight=cw,
-                       callbacks=callbacks(exp, patience=6, best_so_far=float(hist.val_accuracy.max())),
+                       callbacks=callbacks(exp, patience=8, best_so_far=float(hist.val_accuracy.max())),
                        verbose=2)
         hist = pd.concat([hist, pd.DataFrame(h2.history)], ignore_index=True)
     train_min = (time.perf_counter() - t0) / 60
@@ -198,7 +199,8 @@ def main():
     trainable = sum(int(np.prod(w.shape)) for w in model.trainable_weights)
     size_mb = model_path.stat().st_size / 1e6
     row = dict(exp_id=exp, backbone=cfg["backbone"], strategy=cfg["strategy"], augmentation=cfg["aug"],
-            bg_prob=cfg["bg_prob"], class_weights=cfg["use_cw"], epochs=len(hist),
+            bg_prob=cfg["bg_prob"], class_weights=cfg["use_cw"], lr_head=args.lr_head,
+            lr_ft=args.lr_ft if cfg["strategy"] != "feature_extraction" else "", epochs=len(hist),
             train_minutes=round(train_min, 1), val_acc=round(val_acc, 4), val_macro_f1=round(val_f1, 4),
             params_m=round(total_params / 1e6, 2), trainable_params_m=round(trainable / 1e6, 2),
             model_mb=round(size_mb, 1),

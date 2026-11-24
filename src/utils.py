@@ -1,5 +1,4 @@
 """Reproducibility + experiment logging helpers."""
-import csv
 import json
 import os
 import random
@@ -28,19 +27,18 @@ def seed_everything(seed: int = 42) -> None:
 def log_run(**fields) -> None:
     """Append one experiment's settings + metrics to results/runs.csv.
 
+    New columns are added automatically, so older rows simply get blanks.
+
     Example:
-        log_run(exp_id="E2", backbone="MobileNetV2", strategy="feature_extraction",
-                augmentation="standard", epochs=20, lr=1e-3,
-                val_acc=0.87, test_acc=0.86, macro_f1=0.84)
+        log_run(exp_id="E2", backbone="MobileNetV2", val_acc=0.87, macro_f1=0.84)
     """
+    import pandas as pd
+
     RUN_LOG.parent.mkdir(parents=True, exist_ok=True)
-    fields = {"timestamp": datetime.now().isoformat(timespec="seconds"), **fields}
-    new_file = not RUN_LOG.exists()
-    with open(RUN_LOG, "a", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(fields))
-        if new_file:
-            writer.writeheader()
-        writer.writerow(fields)
+    row = pd.DataFrame([{"timestamp": datetime.now().isoformat(timespec="seconds"), **fields}])
+    if RUN_LOG.exists():
+        row = pd.concat([pd.read_csv(RUN_LOG), row], ignore_index=True)
+    row.to_csv(RUN_LOG, index=False)
 
 
 def save_class_names(model_name: str) -> None:
