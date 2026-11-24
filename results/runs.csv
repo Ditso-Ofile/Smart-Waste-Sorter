@@ -1,0 +1,11 @@
+timestamp,exp_id,backbone,strategy,augmentation,bg_prob,class_weights,lr_head,lr_ft,epochs,train_minutes,val_acc,val_macro_f1,params_m,trainable_params_m,model_mb,f1_cardboard,f1_glass,f1_metal,f1_paper,f1_plastic,f1_trash
+2026-11-24T19:46:15,E1,mobilenetv2,feature_extraction,none,0.0,True,0.001,,13,1.1,0.8451,0.8145,2.27,0.01,9.7,0.926,0.829,0.864,0.903,0.788,0.578
+2026-11-24T19:47:36,E2,mobilenetv2,feature_extraction,standard,0.0,True,0.001,,14,1.1,0.8136,0.7823,2.27,0.01,9.7,0.942,0.79,0.783,0.888,0.77,0.52
+2026-11-24T19:50:25,E3,mobilenetv2,fine_tune_top,standard,0.0,True,0.001,1e-05,34,2.6,0.8268,0.8003,2.27,1.67,23.0,0.932,0.795,0.859,0.881,0.775,0.56
+2026-11-24T19:52:46,E5,efficientnetb0,feature_extraction,standard,0.0,True,0.001,,20,2.0,0.8478,0.8294,4.06,0.01,17.2,0.924,0.868,0.827,0.848,0.841,0.667
+2026-11-24T19:57:19,E6,efficientnetb0,fine_tune_top,standard,0.0,True,0.001,1e-05,40,4.3,0.8793,0.8593,4.06,2.66,38.4,0.966,0.893,0.875,0.889,0.851,0.681
+2026-11-24T20:00:04,E3-lr1e-4,mobilenetv2,fine_tune_top,standard,0.0,True,0.001,0.0001,31,2.5,0.8793,0.8522,2.27,1.67,23.0,0.94,0.883,0.892,0.921,0.838,0.638
+2026-11-24T20:04:14,E4-lr1e-4,mobilenetv2,fine_tune_all,standard,0.0,True,0.001,0.0001,34,3.9,0.8819,0.864,2.27,2.2,27.3,0.966,0.82,0.88,0.961,0.82,0.737
+2026-11-24T20:08:23,E6-lr1e-4,efficientnetb0,fine_tune_top,standard,0.0,True,0.001,0.0001,36,3.9,0.9108,0.8969,4.06,2.66,38.4,0.966,0.902,0.889,0.939,0.895,0.791
+2026-11-24T20:13:52,E7-eff,efficientnetb0,fine_tune_top,strong,0.5,True,0.001,0.0001,40,5.2,0.853,0.8353,4.06,2.66,38.4,0.96,0.8,0.777,0.947,0.816,0.711
+2026-11-24T20:18:39,E8-eff,efficientnetb0,fine_tune_top,strong,0.5,False,0.001,0.0001,34,4.5,0.8688,0.8463,4.06,2.66,38.4,0.959,0.835,0.779,0.955,0.849,0.7
