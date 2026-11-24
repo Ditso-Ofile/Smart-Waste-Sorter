@@ -30,7 +30,7 @@ FIG_DIR = RESULTS / "figures"
 # alike). Instead we compare 32x32 grayscale thumbnails with Pearson correlation, only
 # within the SAME class (one object cannot be two materials). Tune with --min-corr.
 THUMB = 32
-MIN_CORR = 0.95
+MIN_CORR = 0.98
 
 
 def imread(path):
