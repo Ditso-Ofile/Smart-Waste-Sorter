@@ -14,6 +14,11 @@ MODELS = ROOT / "models"
 RESULTS = ROOT / "results"
 RUN_LOG = RESULTS / "runs.csv"              # one row per experiment
 
+# Model used by default in the webcam app, benchmark and TFLite export.
+# E6-lr1e-4 has the best test macro-F1 (0.886). E4-lr1e-4 is the faster alternative
+# (0.881 macro-F1, best trash F1, ~25% lower latency): switch here if the demo laptop is slow.
+BEST_MODEL = "E6-lr1e-4"
+
 # --- Data ------------------------------------------------------------------
 # Alphabetical order = the order Keras' image_dataset_from_directory uses.
 # The webcam app MUST use this exact list, in this order.

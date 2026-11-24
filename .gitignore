@@ -15,3 +15,6 @@ models/*
 .DS_Store
 .vscode/
 .idea/
+
+# macOS zip junk
+__MACOSX/
