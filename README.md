@@ -49,21 +49,23 @@ python scripts/preview_augmentation.py     # Step 3: augmentation figures
 python src/train.py --exp E6 --lr-ft 1e-4 --tag lr1e-4   # Steps 4-5 (GPU / Colab)
 python src/evaluate.py --models E6-lr1e-4 E4-lr1e-4      # Step 6: test set + latency
 python app/webcam.py                       # Step 7: live demo (default model: BEST_MODEL)
-python app/webcam.py --condition C2 --label glass        # Step 8: S saves test images
+python scripts/capture.py                  # Step 8: capture the webcam test set (6 conditions)
+python scripts/eval_webcam.py              #   accuracy per condition -> results/domain_shift.csv
 python scripts/export_tflite.py            # Step 9: .tflite float32 + dynamic int8
 python scripts/benchmark.py                #   size + latency of every model
 ```
 
-## Status (24 Nov 2026)
+## Results (v2 splits, near-duplicate threshold r >= 0.98)
 
-Best on the TrashNet test split: **E6-lr1e-4** (EfficientNetB0, top-60 fine-tuned, lr 1e-4):
-accuracy 0.908, macro-F1 0.886, 18 ms/image on CPU. **E4-lr1e-4** (MobileNetV2, fully
-fine-tuned) is close (macro-F1 0.881, best trash F1 0.821) and faster (14 ms).
+| Model | Test acc | Test macro-F1 | F1 trash | CPU latency |
+| --- | --- | --- | --- | --- |
+| **E6-lr1e-4** (EfficientNetB0, top-60 fine-tuned, lr 1e-4) | 0.900 | 0.884 | 0.769 | 19 ms |
+| E4-lr1e-4 (MobileNetV2, fully fine-tuned, lr 1e-4) | 0.890 | 0.877 | 0.780 | 15 ms |
 
-To do: webcam test set + its evaluation (Step 8), TFLite export + benchmark on the demo
-laptop (Step 9), report. Known limitation: in `results/near_duplicates.csv` the
-paper class has many false matches (different white sheets on the white background), which
-chain into one group of 20 paper images that all landed in the test split.
+Full tables: `results/runs.csv` (validation), `results/test_results.csv` (test),
+`results/domain_shift.csv` (webcam conditions, from `scripts/eval_webcam.py`).
+Results on the first split (threshold 0.95, which put a falsely grouped set of 20 paper
+images into the test split) are kept in `results/old_splits/` for reference.
 
 ## Team
 
